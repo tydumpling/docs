@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实现构造函数属性继承</title>
+</head>
+<body>
+  <script>
+    function Learn(params) {
+      this.url = '/learn/js'
+      Request.call(this)
+    }
+
+    function Product(params) {
+      this.url = '/product/music'
+      Request.call(this)
+    }
+
+    function Request() {
+      this.axios = function(params) {
+        // 获取对象key值并遍历赋值等号
+        let arr = Object.keys(params).map(k => {
+          return `${k}=${params[k]}`
+        })
+        // 此时的this指向各自的构造函数
+        return `${this.url}?${arr.join('&')}`
+      }
+    }
+
+    let learn = new Learn()
+    console.log(learn.axios({id: 1, name: 'tydumpling'})); // /learn/js?id=1&name=tydumpling
+
+    let product = new Product()
+    console.log(product.axios({id: 2, name: 'duyidao'})) // /product/music?id=2&name=duyidao
+  </script>
+</body>
+</html>

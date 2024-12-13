@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>面向对象</title>
+</head>
+<body>
+  <script>
+    let user = {
+      name: 'tydumpling',
+      grade: [
+        {title: 'vue', score: 80},
+        {title: 'axios', score: 85}
+      ],
+      average() {
+        return `${this.name}'s grade is ${this.grade.reduce((total, obj) => total += obj.score, 0) / this.grade.length}`
+      }
+    }
+
+    console.log(user.average());
+  </script>
+</body>
+</html>

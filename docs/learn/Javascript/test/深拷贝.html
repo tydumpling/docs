@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>深拷贝</title>
+</head>
+<body>
+  <script>
+    let data = {
+      user: 'name',
+      can: {
+        eat: 'good',
+        sleep: 'well'
+      },
+      learn: ['vue', 'js', 'axios']
+    }
+
+    function copy(params) {
+      let res = params instanceof Object ? {} : []
+      
+      for (const [key, value] of Object.entries(params)) {
+        res[key] = typeof value === 'object' ? copy(value) : value
+      }
+
+      return res
+    }
+
+    const fn = copy(data)
+
+    data.learn[1] = 'react'
+
+    console.log(JSON.stringify(fn, null, 2));
+    console.log(JSON.stringify(data, null, 2));
+  </script>
+</body>
+</html>

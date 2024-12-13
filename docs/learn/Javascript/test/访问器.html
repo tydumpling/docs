@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>访问器</title>
+</head>
+<body>
+  <script>
+    // 访问器基本使用
+    const user = {
+      data: {name:'tydumpling',age:23},
+      set age(value) {
+        if(typeof value !== 'number' || value < 0 || value > 150) return '年龄格式有误'
+        this.data.age = value
+      },
+      get age() {
+        return this.data.age
+      }
+    }
+
+    user.age = 18
+    console.log(user); // {data:{name: 'tydumpling', age: 18}, age:18}
+
+    // 只读属性 / 伪计算
+    const book = {
+      data: {
+        arr: [
+          {name: 'vue使用', price: 20},
+          {name: 'js使用', price: 50},
+        ]
+      },
+      get total() {
+        return this.data.arr.reduce((total, item) => total += item.price, 0)
+      }
+    }
+
+    console.log(book.total); // 70
+
+    // 批量操作
+    const edit = {
+      data: {
+        user:'tydumpling',
+        url: ''
+      },
+      set change(value) {
+        [this.data.user, this.data.url] = value.split(',')
+      },
+      get val() {
+        return `网站为${this.data.user}，网址是${this.data.url}`
+      }
+    }
+
+    edit.change = 'tydumpling博客,https://duyidao.gitee.io/tydumpling/'
+    console.log(edit.val); // 网站为tydumpling博客，网址是https://duyidao.gitee.io/tydumpling/
+  </script>
+</body>
+</html>

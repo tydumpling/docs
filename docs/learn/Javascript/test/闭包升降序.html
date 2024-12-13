@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闭包升降序</title>
+</head>
+
+<body>
+  <script>
+    let lessons = [
+      {
+        title: "媒体查询响应式布局",
+        click: 89,
+        price: 12
+      },
+      {
+        title: "FLEX 弹性盒模型",
+        click: 45,
+        price: 120
+      },
+      {
+        title: "GRID 栅格系统",
+        click: 19,
+        price: 67
+      },
+      {
+        title: "盒子模型详解",
+        click: 29,
+        price: 300
+      }
+    ];
+
+    function field(params, type = 'asc') {
+      return (a,b) => type === 'asc' ? a[params] - b[params] : b[params] - a[params]
+    }
+
+    console.table(lessons.sort(field('price', 'desc')));
+    console.table(lessons.sort(field('click', 'desc')));
+  </script>
+</body>
+
+</html>

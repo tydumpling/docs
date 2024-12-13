@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用代理仿vue实现数据绑定</title>
+</head>
+<body>
+  <input type="text" v-model="title">
+  <input type="text" v-model="title">
+  <div v-bind="title"></div>
+  <hr>
+  <input type="text" v-model="content">
+  <div v-bind="content"></div>
+
+  <script>
+    function model() {
+      let proxy = new Proxy({}, {
+        get(obj, prop) {
+          console.log(obj, prop);
+        },
+        set(obj, prop, value) {
+          console.log(obj, prop, value);
+          obj[prop] = value
+          document.querySelectorAll(`[v-model='${prop}'],[v-bind='${prop}']`).forEach(item => {
+            item.value = value
+            item.innerHTML = value
+          })
+        }
+      })
+      this.init = () => {
+        document.querySelectorAll('[v-model]').forEach(item => {
+          item.addEventListener('keyup', function() {
+            console.log(this.getAttribute);
+            console.log(this.getAttribute('v-model'));
+            proxy[this.getAttribute('v-model')] = this.value
+          })
+        })
+      }
+    }
+
+    new model().init()
+  </script>
+</body>
+</html>

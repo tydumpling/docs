@@ -1,0 +1,135 @@
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  main {
+    width: 400px;
+    flex-direction: column;
+    position: relative;
+    margin-right: 20px;
+  }
+
+  main nav {
+    display: flex;
+    height: 50px;
+    align-items: center;
+  }
+
+  main nav a {
+    background: #95a5a6;
+    margin-right: px;
+    padding: 10px 20px;
+    border: solid 1px #333;
+    color: #fff;
+    js-decoration: none;
+  }
+
+  main nav a:first-of-type {
+    background: #e67e22;
+  }
+
+  section {
+    height: 200px;
+    width: 100%;
+    background: #f1c40f;
+    position: absolute;
+    font-size: 5em;
+    display: none;
+  }
+
+  .hd-tab section:first-of-type {
+    display: block;
+  }
+
+  section:nth-child(even) {
+    background: #27ae60;
+  }
+</style>
+
+<body>
+  <main class="tab1">
+    <nav>
+      <a href="javascript:;">tydumpling</a>
+      <a href="javascript:;">tydumpling</a>
+    </nav>
+    <section>js</section>
+    <section>ts</section>
+  </main>
+  <main class="tab2">
+    <nav>
+      <a href="javascript:;">tydumpling</a>
+      <a href="javascript:;">duyidao</a>
+    </nav>
+    <section>vue</section>
+    <section>react</section>
+  </main>
+</body>
+
+<script>
+  // 继承工厂
+  function extend(sub, sup) {
+    sub.prototype = Object.create(sup.prototype)
+    sub.prototype.constructor = sub
+  }
+
+  function Move() {}
+  Move.prototype.show = function() {
+    this.style.display = "block";
+  }
+  //隐藏所有元素
+  Animation.prototype.hide = function() {
+    this.style.display = "none";
+  };
+  //必变元素集合背景
+  Animation.prototype.background = function(color) {
+    this.style.background = color;
+  };
+
+  // 节点
+  function Tab(tab) {
+    this.tab = document.querySelector(tab)
+    this.link = null
+    this.section = null
+  }
+  extend(Tab, Move) // 最开始这行写在了Tab原型创建init函数下导致报错，后来盘点一下找到原因，写在下面会把Tab的原型变回最开始只有Move的原型，覆盖了原本设置的init函数，因此报错
+
+  // 绑定初始化事件
+  Tab.prototype.init = function () {
+    this.link = this.tab.querySelectorAll('a')
+    this.section = this.tab.querySelectorAll('section')
+    this.bindEvent()
+  }
+
+  // 调用相应方法
+  Tab.prototype.bindEvent = function () {
+    this.link.forEach((el, i) => {
+      el.addEventListener('click', () => {
+        this.reset()
+        this.action(i)
+      })
+    })
+  }
+  // 点击展示的方法
+  Tab.prototype.action = function (i) {
+    this.show.call(this.link[i]);
+  }
+  // 整体隐藏的方法
+  Tab.prototype.reset = function () {
+    this.link.forEach((el, i) => {
+      this.hide.call(this.sections[i]);
+    });
+  }
+
+
+  new Tab('.tab1').init()
+</script>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>代理</title>
+</head>
+
+<body>
+  <script>
+    // 代理函数
+    function fn() {
+      return 1
+    }
+
+    let proxy = new Proxy(fn, {
+      apply(fn, that, value) {
+        console.log(fn, that, value);
+      }
+    })
+
+    proxy(123)
+
+    // 代理数组
+    const lessons = [
+      {
+        title: "媒体查询响应式布局",
+        category: "css"
+      },
+      {
+        title: "FLEX 弹性盒模型",
+        category: "css"
+      },
+      {
+        title: "MYSQL多表查询随意操作",
+        category: "mysql"
+      }
+    ];
+    let arrProxy = new Proxy(lessons, {
+      get(array, key) {
+        array[key].title = array[key].title.length > 5 ? array[key].title.substr(0, 5) + '*'.repeat(3) : array[key].title
+        return array
+      }
+    })
+
+    console.log(arrProxy[0]);
+
+    // 代理对象
+    const hd = { name: "tydumpling" };
+    let objProxy = new Proxy(hd, {
+      get(obj, prop) {
+        return `属性${prop}为${obj[prop]}`
+      },
+      set(obj, prop, value) {
+        obj[prop] = value
+      },
+    })
+
+    objProxy.age = 23
+    console.log(objProxy.age);
+  </script>
+</body>
+
+</html>
