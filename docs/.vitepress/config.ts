@@ -25,7 +25,7 @@ export default withPwa(defineConfig({
   appearance: 'dark',
   lastUpdated: true,
   useWebFonts: false,
-  base: '/blog/',
+  base: '/docs/',
   locales: {
     root: { label: '简体中文', lang: 'zh-CN' },
   },
